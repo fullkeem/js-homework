@@ -14,7 +14,21 @@ const emailInput = document.querySelector(".user-email-input");
 const pwInput = document.querySelector(".user-password-input");
 const loginBtn = document.querySelector(".btn-login");
 
-const handleValid = (() => {
+const emailReg = (text) => {
+  const re =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  return re.test(String(text).toLowerCase());
+};
+
+const pwReg = (text) => {
+  const re = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^*+=-]).{6,16}$/;
+  return re.test(String(text).toLowerCase());
+};
+
+emailInput.focus();
+
+const checkLogin = (() => {
   emailInput.addEventListener("input", (e) => {
     e.preventDefault();
 
@@ -30,27 +44,15 @@ const handleValid = (() => {
     else pwInput.classList.add("is--invalid");
   });
 
-  const emailReg = (text) => {
-    const re =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    return re.test(String(text).toLowerCase());
-  };
-
-  const pwReg = (text) => {
-    const re = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^*+=-]).{6,16}$/;
-    return re.test(String(text).toLowerCase());
-  };
-
   loginBtn.addEventListener("click", (e) => {
     e.preventDefault();
-
     if (emailInput.value === user.id && pwInput.value === user.pw)
       window.location.href = "welcome.html";
     else alert("아이디 또는 비밀번호가 틀렸습니다. 다시 입력해주세요.");
-    emailInput.value = "";
-    pwInput.value = "";
+    emailInput.value = null;
+    pwInput.value = null;
     emailInput.classList.remove("is--invalid");
     pwInput.classList.remove("is--invalid");
+    emailInput.focus();
   });
 })();
