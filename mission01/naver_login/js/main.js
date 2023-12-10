@@ -26,9 +26,9 @@ const pwReg = (text) => {
   return re.test(String(text).toLowerCase());
 };
 
-emailInput.focus();
-
 const checkLogin = (() => {
+  emailInput.focus();
+
   emailInput.addEventListener("input", (e) => {
     e.preventDefault();
 
