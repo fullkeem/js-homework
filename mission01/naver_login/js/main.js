@@ -30,11 +30,12 @@ const checkLogin = (() => {
   emailInput.focus();
 
   emailInput.addEventListener("input", (e) => {
+    //'change' 인풋 값이 바뀔때마다 업데이트
     e.preventDefault();
 
     if (emailReg(emailInput.value) || !emailInput.value)
       emailInput.classList.remove("is--invalid");
-    else return emailInput.classList.add("is--invalid");
+    else emailInput.classList.add("is--invalid");
   });
 
   pwInput.addEventListener("input", (e) => {
