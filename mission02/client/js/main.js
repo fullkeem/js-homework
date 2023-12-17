@@ -5,38 +5,47 @@
 3. 이미지 변경
 4. 텍스트 변경
 5. 함수 분리
-
 */
+
+const handleNavClick = (e) => {
+  e.preventDefault();
+  let li = e.target.closest("li");
+  if (!li) return;
+  let index = li.dataset.index;
+  const ul = e.target.closest("ul");
+  const list = [...ul.children];
+  toggleClass(list, li, "is-active");
+  if (li.classList.contains("is-active")) {
+    changeVisual(index);
+    changeNickName(index);
+    changeBackgroundColor(index);
+  }
+};
+
+const toggleClass = (arr, el, className) => {
+  arr.forEach((el) => removeClass(el, "is-active"));
+  addClass(el, className);
+};
+
+const changeVisual = (index) => {
+  visual.src = `./assets/${data[index - 1].name}.jpeg`;
+  visual.alt = `${data[index - 1].alt}`;
+};
+
+const changeNickName = (index) => {
+  nickName.innerHTML = `${data[index - 1].name}`;
+  nickName.style.color = `${data[index - 1].font}`;
+};
+
+const changeBackgroundColor = (index) => {
+  const body = getNode("body");
+  body.style.background = `linear-gradient(to bottom, ${
+    data[index - 1].color[0]
+  }, ${data[index - 1].color[1]})`;
+};
 
 const nav = getNode(".nav");
 const visual = getNode(".visual img");
 const nickName = getNode(".nickName");
 
-const handleClick = (e) => {
-  e.preventDefault();
-
-  let li = e.target.closest("li");
-  // const isActive = getNode(".is-active");
-
-  if (!li) return;
-
-  let index = li.dataset.index;
-  const ul = e.target.closest("ul");
-  const list = [...ul.children];
-  // const btn = e.target.closest("button");
-  const body = getNode("body");
-
-  list.forEach((li) => removeClass(li, "is-active"));
-  addClass(li, "is-active");
-
-  if (li.classList.contains("is-active")) {
-    visual.src = `./assets/${data[index - 1].name}.jpeg`;
-    visual.alt = `${data[index - 1].alt}`;
-    nickName.innerHTML = `${data[index - 1].name}`;
-    body.style.background = `linear-gradient(to bottom, ${
-      data[index - 1].color[0]
-    }, ${data[index - 1].color[1]})`;
-  }
-};
-
-nav.addEventListener("click", handleClick);
+nav.addEventListener("click", handleNavClick);
